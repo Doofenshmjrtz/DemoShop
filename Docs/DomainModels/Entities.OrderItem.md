@@ -13,9 +13,9 @@ class OrderItem
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000000",
-  "unitPrice": "00.00",
-  "quantity": "00",
-  "subtotal": "00.00",
+  "unitPrice": 10.00,
+  "quantity": 10,
+  "subtotal": 100.00,
   "isDelivered": false
 }
 ```
