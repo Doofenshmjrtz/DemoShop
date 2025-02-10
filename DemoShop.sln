@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoShop.Api", "DemoShop.Api\DemoShop.Api.csproj", "{C9086853-9834-4EB9-9540-0290C3A0DE7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoShop.Domain.Core", "DemoShop.Domain.Core\DemoShop.Domain.Core.csproj", "{F6979F40-9BCD-4BFE-BA9D-68AC51E8ACCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9086853-9834-4EB9-9540-0290C3A0DE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9086853-9834-4EB9-9540-0290C3A0DE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9086853-9834-4EB9-9540-0290C3A0DE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9086853-9834-4EB9-9540-0290C3A0DE7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6979F40-9BCD-4BFE-BA9D-68AC51E8ACCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6979F40-9BCD-4BFE-BA9D-68AC51E8ACCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6979F40-9BCD-4BFE-BA9D-68AC51E8ACCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6979F40-9BCD-4BFE-BA9D-68AC51E8ACCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

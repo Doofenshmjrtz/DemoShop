@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "k5eISu8Y2RA=",
+  "success": true,
+  "projectFilePath": "D:\\Self\\Projects\\Dotnet\\DemoShop\\DemoShop.Api\\DemoShop.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
