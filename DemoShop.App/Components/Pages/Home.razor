@@ -1,0 +1,22 @@
+﻿@page "/"
+@using DemoShop.Domain.Core.Order
+
+<PageTitle>Home</PageTitle>
+
+<ul>
+    @foreach (var oi in _orders!)
+    {
+        <li>@oi.OrderDate - @oi.OrderTotal</li>
+    }
+</ul>
+
+
+@code
+{
+    List<Order>? _orders = [];
+    
+    protected override Task OnInitializedAsync()
+    {
+        throw new NotImplementedException();
+    }
+}
