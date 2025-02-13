@@ -29,10 +29,10 @@ public sealed class Order : AggregateRoot
         return order;
     }
 
-    public void AddItem(decimal unitPrice, int quantity)
+    public void AddItem(string name, decimal unitPrice, int quantity)
     {
         EnsureOrderIsModifiable();
-        _items.Add(OrderItem.Create(unitPrice, quantity));
+        _items.Add(OrderItem.Create(name, unitPrice, quantity));
         OrderTotal = _items.Sum(item => item.Subtotal); 
     }
 

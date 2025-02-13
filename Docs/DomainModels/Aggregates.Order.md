@@ -9,8 +9,9 @@ class Order
     void AddItem(decimal unitPrice, int quantity);
     void DeleteItem(Guid orderItemId);
     void MarkAsProcessing();
-    void MarkAsDelivered(Guid orderItemId);
+    void MarkItemAsDelivered(Guid orderItemId);
     void MarkAsDelivered();
+    void MarkItemAsCancelled(Guid orderItemId);
     void MarkAsCanceled();
 }
 ```
@@ -22,6 +23,7 @@ class Order
   "items": [
     {
       "id": "00000000-0000-0000-0000-000000000000",
+      "name": "AAA AAA",
       "unitPrice": 10.00,
       "quantity": 10,
       "subtotal": 100.00,

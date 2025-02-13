@@ -1,22 +1,22 @@
 ﻿@page "/"
-@using DemoShop.Domain.Core.Order
+@inject MediatR.IMediator Mediator
 
 <PageTitle>Home</PageTitle>
 
 <ul>
-    @foreach (var oi in _orders!)
+    @foreach (var oi in _order!.Items)
     {
-        <li>@oi.OrderDate - @oi.OrderTotal</li>
+        <li>@oi.Name - @oi.Subtotal</li>
     }
 </ul>
 
 
 @code
 {
-    List<Order>? _orders = [];
+    Order? _order;
     
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        throw new NotImplementedException();
+        _order = await Mediator.Send(new GetOrderQuery());
     }
 }

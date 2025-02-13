@@ -13,7 +13,6 @@
 
     <ItemGroup>
       <Folder Include="Common\Commands\" />
-      <Folder Include="Common\Handlers\" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,13 @@
 using DemoShop.App.Components;
+using DemoShop.Domain.Core;
+using DemoShop.Domain.Core.Common.DataAccess;
+using DemoShop.Domain.Core.Common.Interfaces;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IDataAccess, DataAccess>();
+builder.Services.AddMediatR(typeof(MediatREntryPoint).Assembly);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

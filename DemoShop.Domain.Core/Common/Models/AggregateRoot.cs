@@ -1,3 +1,3 @@
 namespace DemoShop.Domain.Core.Common.Models;
 
-public class AggregateRoot : Entity {}
+public abstract class AggregateRoot : Entity {}
