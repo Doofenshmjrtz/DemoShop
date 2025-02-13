@@ -86,9 +86,8 @@ public sealed class Order : AggregateRoot
     
     private OrderItem GetOrderItem(Guid orderItemId) => _items.FirstOrDefault(i => i.Id() == orderItemId) ?? throw new InvalidOperationException($"Item with id '{orderItemId}' does not exist in the order");
 
-    private void EnsureOrderIsModifiable()
-    {
-        if (Status != OrderStatus.Draft)
-            throw new InvalidOperationException("Can only modify orders that are in Draft status");
-    }
+    private void EnsureOrderIsModifiable() => 
+        _ = Status != OrderStatus.Draft 
+            ? throw new InvalidOperationException("Can only modify orders that are in Draft status") 
+            : 0;
 }
