@@ -58,42 +58,33 @@ public sealed class Order : AggregateRoot
         OrderTotal = _items.Sum(item => item.Subtotal);
     }
 
-    public void MarkAsDelivered(Guid orderItemId)
-    {
-        if (Status != OrderStatus.Processing)
-            throw new InvalidOperationException("Can only deliver items when order is in Processing status");
-
-        var item = _items.FirstOrDefault(i => i.Id() == orderItemId);
-        if (item == null)
-            throw new InvalidOperationException($"Item with id '{orderItemId}' does not exist in the order");
-
-        item.MarkItemAsDelivered();
-
-        if (_items.All(i => i.IsDelivered))
-            Status = OrderStatus.Delivered;
-    }
+    public void MarkItemAsDelivered(Guid orderItemId) => GetOrderItem(orderItemId).MarkAsDelivered();
 
     public void MarkAsDelivered()
     {
         if (Status != OrderStatus.Processing)
             throw new InvalidOperationException("Can only mark orders as delivered when they are in Processing status");
 
-        if (_items.Count == 0)
-            throw new InvalidOperationException("Cannot mark an empty order as delivered");
-
-        if (!_items.All(i => i.IsDelivered))
+        if (_items.Any(i => i.Status != OrderItemStatus.Delivered))
             throw new InvalidOperationException("Cannot mark order as delivered until all items are delivered");
 
         Status = OrderStatus.Delivered;
     }
 
+    public void MarkItemAsCancelled(Guid orderItemId) => GetOrderItem(orderItemId).MarkAsCancelled();
+
     public void MarkAsCanceled()
     {
         if (Status == OrderStatus.Delivered)
             throw new InvalidOperationException("Cannot cancel a delivered order");
+        
+        if (_items.Any(i => i.Status != OrderItemStatus.Cancelled))
+            throw new InvalidOperationException("Cannot mark order as cancelled until all items are cancelled");
 
         Status = OrderStatus.Canceled;
     }
+    
+    private OrderItem GetOrderItem(Guid orderItemId) => _items.FirstOrDefault(i => i.Id() == orderItemId) ?? throw new InvalidOperationException($"Item with id '{orderItemId}' does not exist in the order");
 
     private void EnsureOrderIsModifiable()
     {
