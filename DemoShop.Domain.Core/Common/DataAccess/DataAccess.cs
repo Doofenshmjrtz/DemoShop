@@ -1,4 +1,5 @@
 using DemoShop.Domain.Core.Common.Interfaces;
+using DemoShop.Domain.Core.Order.Entities;
 using O = DemoShop.Domain.Core.Order.Order;
 
 namespace DemoShop.Domain.Core.Common.DataAccess;
@@ -18,5 +19,25 @@ public class DataAccess : IDataAccess
     public O GetOrder()
     {
         return _order;
+    }
+
+    public OrderItem GetOrderItem(Guid itemId)
+    {
+        foreach (var item in _order.Items)
+        {
+            if (item.Id == itemId) 
+                return item;
+        }
+        throw new KeyNotFoundException();
+    }
+
+    public List<OrderItem> GetOrderItems()
+    {
+        return _order.Items.ToList();
+    }
+
+    public void AddItem(string name, decimal price, int quantity)
+    {
+        _order.AddItem(name, price, quantity);
     }
 }

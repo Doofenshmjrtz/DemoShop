@@ -25,7 +25,7 @@ public sealed class Order : AggregateRoot
     public new static Order Create()
     {
         var order = new Order();
-        order.Raise(new OrderCreatedDomainEvent(order.Id()));
+        order.Raise(new OrderCreatedDomainEvent(order.Id));
         return order;
     }
 
@@ -39,7 +39,7 @@ public sealed class Order : AggregateRoot
     public void RemoveItem(Guid orderItemId)
     {
         EnsureOrderIsModifiable();
-        var item = _items.FirstOrDefault(i => i.Id() == orderItemId);
+        var item = _items.FirstOrDefault(i => i.Id == orderItemId);
         if (item == null) 
             throw new InvalidOperationException($"Item with id - '{orderItemId}' does no exist in the bucket");
         _items.Remove(item);
@@ -84,7 +84,7 @@ public sealed class Order : AggregateRoot
         Status = OrderStatus.Canceled;
     }
     
-    private OrderItem GetOrderItem(Guid orderItemId) => _items.FirstOrDefault(i => i.Id() == orderItemId) ?? throw new InvalidOperationException($"Item with id '{orderItemId}' does not exist in the order");
+    private OrderItem GetOrderItem(Guid orderItemId) => _items.FirstOrDefault(i => i.Id == orderItemId) ?? throw new InvalidOperationException($"Item with id '{orderItemId}' does not exist in the order");
 
     private void EnsureOrderIsModifiable() => 
         _ = Status != OrderStatus.Draft 

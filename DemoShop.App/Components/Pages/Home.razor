@@ -1,22 +1,56 @@
 ﻿@page "/"
-@inject MediatR.IMediator Mediator
+@using System.Text.Json
+@* @inject MediatR.IMediator Mediator *@
 
 <PageTitle>Home</PageTitle>
 
 <ul>
-    @foreach (var oi in _order!.Items)
-    {
-        <li>@oi.Name - @oi.Subtotal</li>
-    }
+    <div>
+        <pre>@PrettyPrintJson(_responseBooty)</pre>
+    </div>
+    @* @foreach (var oi in _order!.Items) *@
+    @* { *@
+    @*     <li>@oi.Name - @oi.Subtotal</li> *@
+    @* } *@
 </ul>
 
 
 @code
 {
-    Order? _order;
+    string? _responseBooty;
     
     protected override async Task OnInitializedAsync()
     {
-        _order = await Mediator.Send(new GetOrderQuery());
+        var client = new HttpClient();
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri("http://localhost:5064/api/Order"),
+        };
+        using var response = await client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        _responseBooty = await response.Content.ReadAsStringAsync();
+        
+        // var settings = new JsonSerializerSettings { Converters = { new FactoryConverter<Order>() } };
+        // _order = JsonConvert.DeserializeObject<Order>(body);
+        // _order = await Mediator.Send(new GetOrderQuery());
+    }
+    
+    private static string? PrettyPrintJson(string? json)
+    {
+        try
+        {
+            if (json != null)
+            {
+                var parsedJson = JsonSerializer.Deserialize<object>(json);
+                return JsonSerializer.Serialize(parsedJson, new JsonSerializerOptions { WriteIndented = true });
+            }
+        }
+        catch (JsonException)
+        {
+            return "Invalid JSON";
+        }
+
+        return null;
     }
 }

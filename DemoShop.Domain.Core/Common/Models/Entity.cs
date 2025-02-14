@@ -5,19 +5,17 @@ namespace DemoShop.Domain.Core.Common.Models;
 public abstract class Entity : IEquatable<Entity>
 {
     private readonly List<IDomainEvent> _domainEvents = [];
-    private readonly Guid _id;
-    internal Entity() => _id = Guid.NewGuid();
+    public Guid Id { get; init; }
+    internal Entity() => Id = Guid.NewGuid();
     
     public bool Equals(Entity? other) => Equals((object?)other);
-    public override bool Equals(object? obj) => obj is Entity entity && _id.Equals(entity._id);
+    public override bool Equals(object? obj) => obj is Entity entity && Id.Equals(entity.Id);
 
-    public override int GetHashCode() => _id.GetHashCode() * 4237;
+    public override int GetHashCode() => Id.GetHashCode() * 4237;
 
     public static bool operator ==(Entity? left, Entity? right) => Equals(left, right);
 
     public static bool operator !=(Entity? left, Entity? right) => !Equals(left, right);
-
-    internal Guid Id() => _id;
     
     public List<IDomainEvent> GetDomainEvents() => _domainEvents.ToList();
 
