@@ -7,5 +7,5 @@ public interface IDataAccess
     public Order.Order GetOrder();
     public OrderItem GetOrderItem(Guid itemId);
     public List<OrderItem> GetOrderItems();
-    public void AddItem(string name, decimal price, int quantity);
+    public OrderItem AddItem(string name, decimal price, int quantity);
 }

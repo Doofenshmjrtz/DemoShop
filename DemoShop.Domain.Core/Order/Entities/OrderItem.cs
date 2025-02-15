@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using DemoShop.Domain.Core.Common.Models;
 using DemoShop.Domain.Core.Order.Enums;
 
@@ -11,6 +12,7 @@ public class OrderItem : Entity
     public decimal Subtotal {get; private set;}
     public OrderItemStatus Status { get; private set; }
     
+    [JsonConstructor]
     private OrderItem(string name, decimal unitPrice, int quantity)
     {
         Name = name;

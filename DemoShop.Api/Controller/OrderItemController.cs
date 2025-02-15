@@ -1,3 +1,4 @@
+using DemoShop.Domain.Core.Order.Commands;
 using DemoShop.Domain.Core.Order.Entities;
 using DemoShop.Domain.Core.Order.Queries;
 using MediatR;
@@ -11,11 +12,11 @@ public class OrderItemController(IMediator mediator) : ControllerBase
 {
     // GET api/<OrderItemController>
     [HttpGet]
-    public async Task<List<OrderItem>> Get() => await mediator.Send(new GetOrderItemListQuery());
+    public async Task<ActionResult<List<OrderItem>>> Get() => await mediator.Send(new GetOrderItemListQuery());
     
     // GET api/<OrderItemController>/<Id>
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<OrderItem>> Get(Guid id)
+    public async Task<ActionResult<OrderItem>> Get([FromRoute] Guid id)
     {
         try 
         {
@@ -24,7 +25,12 @@ public class OrderItemController(IMediator mediator) : ControllerBase
         }
         catch (NullReferenceException)
         {
-            return NotFound();
+            return BadRequest("Invalid ID");
         }
     }
+    
+    // POST api/<OrderItemController>
+    [HttpPost]
+    public async Task<ActionResult<OrderItem>> Post([FromBody] OrderItem orderItem) => 
+        await mediator.Send(new InsertOrderItemCommand(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity));
 }
