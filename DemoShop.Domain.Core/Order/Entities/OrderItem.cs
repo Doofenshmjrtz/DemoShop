@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
-using DemoShop.Domain.Core.Common.Models;
+using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Enums;
+
+using static DemoShop.Domain.Core.Common.Abstractions.Result;
+using static DemoShop.Domain.Core.Order.Errors.OrderItemErrors;
 
 namespace DemoShop.Domain.Core.Order.Entities;
 
@@ -24,21 +27,27 @@ public class OrderItem : Entity
 
     public static OrderItem Create(string name, decimal unitPrice, int quantity) => new OrderItem(name, unitPrice, quantity);
 
-    public void MarkAsDelivered()
+    public Result MarkAsDelivered()
     {
         if (Status == OrderItemStatus.Delivered)
-            throw new InvalidOperationException("Item is already delivered");
+            return Failure(AlreadyDelivered);
         
         Status = OrderItemStatus.Delivered;
+        return Success();
     }
     
-    public void MarkAsCancelled()
+    public Result MarkAsCancelled()
     {
-        Status = Status switch
+        switch (Status)
         {
-            OrderItemStatus.Delivered => throw new InvalidOperationException("Cannot cancel a delivered order"),
-            OrderItemStatus.Cancelled => throw new InvalidOperationException("Item is already cancelled"),
-            _ => OrderItemStatus.Cancelled
-        };
+            case OrderItemStatus.Delivered:
+                return Failure(AlreadyDelivered);
+            case OrderItemStatus.Cancelled:
+                return Failure(AlreadyCancelled);
+            case OrderItemStatus.InProgress:
+            default:
+                Status = OrderItemStatus.Cancelled;
+                return Success();
+        }
     }
 }
