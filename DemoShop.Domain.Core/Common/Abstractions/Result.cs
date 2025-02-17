@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace DemoShop.Domain.Core.Common.Abstractions;
 
 public class Result
@@ -28,6 +30,7 @@ public class Result<T>
     public T Value { get; private set; }
     public Error Error { get; private set; }
     
+    [JsonConstructor]
     private Result(T value, bool isSuccess, Error error)
     {
         if(isSuccess && error != Error.None || !isSuccess && error == Error.None)
