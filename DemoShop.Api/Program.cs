@@ -1,4 +1,5 @@
-using DemoShop.Domain.Core;
+using ApplicationEntry = DemoShop.Application.MediatREntryPoint;
+using DomainCoreEntry = DemoShop.Domain.Core.MediatREntryPoint;
 using DemoShop.Domain.Core.Common.DataAccess;
 using DemoShop.Domain.Core.Common.Interfaces;
 using MediatR;
@@ -12,7 +13,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IDataAccess, DataAccess>();
-builder.Services.AddMediatR(typeof(MediatREntryPoint).Assembly);
+builder.Services.AddMediatR(typeof(DomainCoreEntry).Assembly);
+builder.Services.AddMediatR(typeof(ApplicationEntry).Assembly);
 
 var app = builder.Build();
 

@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using DemoShop.Domain.Core.Common.Models;
+using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Entities;
 using DemoShop.Domain.Core.Order.Enums;
 using DemoShop.Domain.Core.Order.Events; 

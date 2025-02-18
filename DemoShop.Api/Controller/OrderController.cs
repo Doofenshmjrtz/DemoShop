@@ -1,5 +1,5 @@
+using DemoShop.Application.Orders.Queries;
 using DemoShop.Domain.Core.Order;
-using DemoShop.Domain.Core.Order.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

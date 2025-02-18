@@ -1,6 +1,7 @@
-using DemoShop.Domain.Core.Order.Commands;
+using DemoShop.Application.Orders.Commands;
+using DemoShop.Application.Orders.Queries;
+using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Entities;
-using DemoShop.Domain.Core.Order.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,6 @@ public class OrderItemController(IMediator mediator) : ControllerBase
     
     // POST api/<OrderItemController>
     [HttpPost]
-    public async Task<ActionResult<OrderItem>> Post([FromBody] OrderItem orderItem) => 
-        await mediator.Send(new InsertOrderItemCommand(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity));
+    public async Task<Result<OrderItem>> Post([FromBody] OrderItem orderItem) => 
+        await mediator.Send(new InsertCommand<OrderItem>(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity));
 }
