@@ -9,6 +9,8 @@ namespace DemoShop.Domain.Core.Order;
 public sealed class Order : AggregateRoot
 {
     private readonly List<OrderItem> _items = [];
+    private static long Counter { get; set; }
+    public long OrderId { get; private set; }
     public DateTime OrderDate { get; private set; }
     public decimal OrderTotal { get; private set; }
     public OrderStatus Status { get; private set; }
@@ -16,10 +18,12 @@ public sealed class Order : AggregateRoot
 
     private Order()
     {
+        OrderId = Counter;
         OrderDate = DateTime.UtcNow;
         OrderTotal = _items.Sum(item => item.Subtotal);
         Status = OrderStatus.Draft;
         Items = _items.AsReadOnly();
+        Counter++;
     }
     
     public new static Order Create()

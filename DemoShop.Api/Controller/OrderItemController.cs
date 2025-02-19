@@ -32,6 +32,6 @@ public class OrderItemController(IMediator mediator) : ControllerBase
     
     // POST api/<OrderItemController>
     [HttpPost]
-    public async Task<Result<OrderItem>> Post([FromBody] OrderItem orderItem) => 
-        await mediator.Send(new InsertCommand<OrderItem>(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity));
+    public async Task<Result<long>> Post([FromBody] OrderItem orderItem) => 
+        await mediator.Send(new InsertCommand(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity));
 }

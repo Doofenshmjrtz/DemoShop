@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
     {
         options
             .WithTitle("DemoShop.Api")
-            .WithTheme(ScalarTheme.DeepSpace)
+            .WithTheme(ScalarTheme.Purple)
             .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
     });
 }

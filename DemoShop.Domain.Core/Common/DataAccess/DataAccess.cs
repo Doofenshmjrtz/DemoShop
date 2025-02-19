@@ -36,9 +36,9 @@ public class DataAccess : IDataAccess
         return _order.Items.ToList();
     }
 
-    public OrderItem AddItem(string name, decimal price, int quantity)
+    public long AddItem(string name, decimal price, int quantity)
     {
         _order.AddItem(name, price, quantity);
-        return _order.Items.Last();
+        return _order.Items.Last().OrderItemId;
     }
 }
