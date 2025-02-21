@@ -1,9 +1,8 @@
-using DemoShop.Application.Orders.Queries;
-using DemoShop.Domain.Core.Common.Interfaces;
+using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core.Order;
 using MediatR;
 
-namespace DemoShop.Application.Orders.Handlers;
+namespace DemoShop.Application.Orders.Queries;
 
 public class GetOrderHandler(IDataAccess data) : IRequestHandler<GetOrderQuery, Order>
 {

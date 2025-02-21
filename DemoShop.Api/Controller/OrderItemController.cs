@@ -2,6 +2,7 @@ using DemoShop.Application.Orders.Commands;
 using DemoShop.Application.Orders.Queries;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Entities;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,10 @@ namespace DemoShop.Api.Controller;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OrderItemController(IMediator mediator) : ControllerBase
+public class OrderItemController(IMediator mediator, IServiceProvider serviceProvider) : ControllerBase
 {
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    
     // GET api/<OrderItemController>
     [HttpGet]
     public async Task<ActionResult<List<OrderItem>>> Get() => await mediator.Send(new GetOrderItemListQuery());
@@ -19,19 +22,43 @@ public class OrderItemController(IMediator mediator) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<OrderItem>> Get([FromRoute] Guid id)
     {
-        try 
+        var query = new GetOrderItemByIdQuery(id);
+
+        var validator = _serviceProvider.GetService<IValidator<GetOrderItemByIdQuery>>();
+
+        if (validator != null)
         {
-            var result = await mediator.Send(new GetOrderItemByIdQuery(id));
-            return Ok(result);
+            var validationResult = await validator.ValidateAsync(query);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult
+                    .Errors
+                    .Select(e => e.ErrorMessage)
+                );
         }
-        catch (NullReferenceException)
-        {
-            return BadRequest("Invalid ID");
-        }
+
+        var result = await mediator.Send(query);
+        return Ok(result);
     }
     
     // POST api/<OrderItemController>
     [HttpPost]
-    public async Task<Result<long>> Post([FromBody] OrderItem orderItem) => 
-        await mediator.Send(new InsertCommand(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity));
+    public async Task<ActionResult<Result<long>>> Post([FromBody] OrderItemDto orderItem)
+    {
+        var command = new CreateOrderItemCommand(orderItem.Name, orderItem.UnitPrice, orderItem.Quantity);
+        
+        var validator = _serviceProvider.GetService<IValidator<CreateOrderItemCommand>>();
+
+        if (validator == null) 
+            return await mediator.Send(command);
+        
+        var validationResult = await validator.ValidateAsync(command);
+        
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult
+                .Errors
+                .Select(e => e.ErrorMessage)
+            );
+
+        return await mediator.Send(command);
+    } 
 }

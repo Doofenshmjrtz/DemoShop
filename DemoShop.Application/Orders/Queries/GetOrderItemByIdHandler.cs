@@ -1,8 +1,7 @@
-using DemoShop.Application.Orders.Queries;
 using DemoShop.Domain.Core.Order.Entities;
 using MediatR;
 
-namespace DemoShop.Application.Orders.Handlers;
+namespace DemoShop.Application.Orders.Queries;
 
 public class GetOrderItemByIdHandler : IRequestHandler<GetOrderItemByIdQuery, OrderItem>
 {
@@ -13,8 +12,6 @@ public class GetOrderItemByIdHandler : IRequestHandler<GetOrderItemByIdQuery, Or
     public async Task<OrderItem> Handle(GetOrderItemByIdQuery request, CancellationToken cancellationToken)
     { 
         var results = await _mediator.Send(new GetOrderItemListQuery(), cancellationToken);
-        var output = results.FirstOrDefault(x => x.Id == request.Id);
-        return output == null ? null! : // This will trigger BadRequest() in the controller
-            output;
+        return results.FirstOrDefault(x => x.Id == request.Id)!;
     }
 }

@@ -1,8 +1,7 @@
-using DemoShop.Domain.Core.Common.Interfaces;
 using DemoShop.Domain.Core.Order.Entities;
 using O = DemoShop.Domain.Core.Order.Order;
 
-namespace DemoShop.Domain.Core.Common.DataAccess;
+namespace DemoShop.Application.Common.DataAccess;
 
 public class DataAccess : IDataAccess
 {

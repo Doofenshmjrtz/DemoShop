@@ -10,4 +10,8 @@
       <ProjectReference Include="..\DemoShop.Domain.Core\DemoShop.Domain.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="12.0.0-preview1" />
+    </ItemGroup>
+
 </Project>

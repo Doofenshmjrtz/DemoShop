@@ -1,9 +1,8 @@
 using DemoShop.Application.Common;
-using DemoShop.Domain.Core.Common.Abstractions;
 
 namespace DemoShop.Application.Orders.Commands;
 
-public sealed class InsertCommand(string name, decimal unitPrice, int quantity) : BaseCommand<Result<long>>
+public sealed class CreateOrderItemCommand(string name, decimal unitPrice, int quantity) : BaseCommand
 {
     public string Name { get; init; } = name;
     public decimal UnitPrice { get; init; } = unitPrice;

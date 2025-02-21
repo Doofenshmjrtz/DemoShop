@@ -1,10 +1,10 @@
 using DemoShop.Domain.Core.Order.Entities;
 
-namespace DemoShop.Domain.Core.Common.Interfaces;
+namespace DemoShop.Application.Common.DataAccess;
 
 public interface IDataAccess
 {
-    public Order.Order GetOrder();
+    public Domain.Core.Order.Order GetOrder();
     public OrderItem GetOrderItem(Guid itemId);
     public List<OrderItem> GetOrderItems();
     public long AddItem(string name, decimal price, int quantity);

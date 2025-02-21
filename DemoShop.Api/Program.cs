@@ -1,7 +1,7 @@
-using ApplicationEntry = DemoShop.Application.MediatREntryPoint;
-using DomainCoreEntry = DemoShop.Domain.Core.MediatREntryPoint;
-using DemoShop.Domain.Core.Common.DataAccess;
-using DemoShop.Domain.Core.Common.Interfaces;
+using DemoShop.Application;
+using DemoShop.Application.Common.DataAccess;
+using DemoShop.Domain.Core;
+using FluentValidation;
 using MediatR;
 using Scalar.AspNetCore;
 
@@ -13,8 +13,16 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IDataAccess, DataAccess>();
-builder.Services.AddMediatR(typeof(DomainCoreEntry).Assembly);
-builder.Services.AddMediatR(typeof(ApplicationEntry).Assembly);
+builder.Services.AddMediatR(typeof(DomainEntryPoint).Assembly);
+builder.Services.AddMediatR(typeof(ApplicationEntryPoint).Assembly);
+
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<ApplicationEntryPoint>()
+    .AddClasses(classes => classes
+        .AssignableTo(typeof(IValidator<>)))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime()
+);
 
 var app = builder.Build();
 
