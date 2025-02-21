@@ -1,3 +1,3 @@
 namespace DemoShop.Application;
 
-public class ApplicationEntryPoint {}
+public sealed class ApplicationEntryPoint;

@@ -1,3 +1,3 @@
 namespace DemoShop.Domain.Core;
 
-public sealed class DomainEntryPoint {}
+public sealed class DomainEntryPoint;
