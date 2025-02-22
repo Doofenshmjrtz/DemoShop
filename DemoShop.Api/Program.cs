@@ -1,3 +1,4 @@
+using DemoShop.Api.Filters;
 using DemoShop.Application;
 using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core;
@@ -10,11 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IDataAccess, DataAccess>();
+builder.Services.AddScoped<ResultFilterAttribute>();
 builder.Services.AddMediatR(typeof(DomainEntryPoint).Assembly);
 builder.Services.AddMediatR(typeof(ApplicationEntryPoint).Assembly);
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ResultFilterAttribute>();
+});
 
 builder.Services.Scan(scan => scan
     .FromAssemblyOf<ApplicationEntryPoint>()

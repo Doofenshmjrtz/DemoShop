@@ -1,8 +1,9 @@
 using System.Text.Json.Serialization;
+using DemoShop.Domain.Core.Common.Interfaces;
 
 namespace DemoShop.Domain.Core.Common.Abstractions;
 
-public class Result
+public class Result : IResult
 {
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
@@ -23,7 +24,7 @@ public class Result
 }
 
 
-public class Result<T>
+public class Result<T> : IResult
 {
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;

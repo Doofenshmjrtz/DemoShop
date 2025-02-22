@@ -14,7 +14,7 @@ public class CreateOrderItemHandler : BaseCommandHandler<CreateOrderItemCommand>
     public override async Task<Result<long>> Handle(CreateOrderItemCommand request, CancellationToken cancellationToken) => 
         Success(
             await Task.FromResult(
-                _data.AddItem(
+                _data.AddOrderItem(
                     request.Name,
                     request.UnitPrice,
                     request.Quantity)

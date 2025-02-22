@@ -2,12 +2,14 @@ using DemoShop.Application.Orders.Commands;
 using DemoShop.Application.Orders.Queries;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Entities;
+using Microsoft.AspNetCore.Mvc;
+using DemoShop.Api.Filters;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DemoShop.Api.Controller;
 
+[ResultFilter]
 [ApiController]
 [Route("api/[controller]")]
 public class OrderItemController(IMediator mediator, IServiceProvider serviceProvider) : ControllerBase
