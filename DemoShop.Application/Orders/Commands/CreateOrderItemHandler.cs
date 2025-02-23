@@ -11,10 +11,12 @@ public class CreateOrderItemHandler : BaseCommandHandler<CreateOrderItemCommand>
 
     public CreateOrderItemHandler(IDataAccess data) => _data = data;
 
-    public override async Task<Result<long>> Handle(CreateOrderItemCommand request, CancellationToken cancellationToken) => 
+    public override async Task<Result<long>>
+        Handle(CreateOrderItemCommand request, CancellationToken cancellationToken) =>
         Success(
             await Task.FromResult(
-                _data.AddOrderItem(
+                _data.CreateOrderItem(
+                    request.Id,
                     request.Name,
                     request.UnitPrice,
                     request.Quantity)
