@@ -9,7 +9,8 @@ namespace DemoShop.Domain.Core.Order;
 public sealed class Order : AggregateRoot
 {
     private readonly List<OrderItem> _items = [];
-    private static long Counter { get; set; }
+    private long _orderItemCounter;
+    private static long _orderCounter;
     public long OrderId { get; private set; }
     public DateTime OrderDate { get; private set; }
     public decimal OrderTotal { get; private set; }
@@ -18,12 +19,11 @@ public sealed class Order : AggregateRoot
 
     private Order()
     {
-        OrderId = Counter;
+        OrderId = _orderCounter++;
         OrderDate = DateTime.UtcNow;
         OrderTotal = _items.Sum(item => item.Subtotal);
         Status = OrderStatus.Draft;
         Items = _items.AsReadOnly();
-        Counter++;
     }
     
     public new static Order Create()
@@ -36,7 +36,7 @@ public sealed class Order : AggregateRoot
     public void AddItem(string name, decimal unitPrice, int quantity)
     {
         EnsureOrderIsModifiable();
-        _items.Add(OrderItem.Create(name, unitPrice, quantity));
+        _items.Add(OrderItem.Create(_orderItemCounter++, name, unitPrice, quantity));
         OrderTotal = _items.Sum(item => item.Subtotal); 
     }
 

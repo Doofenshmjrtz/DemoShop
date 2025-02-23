@@ -9,7 +9,6 @@ namespace DemoShop.Domain.Core.Order.Entities;
 
 public class OrderItem : Entity
 {
-    private static long Counter { get; set; }
     public long OrderItemId { get; private set; }
     public string Name { get; private set; }
     public decimal UnitPrice { get; private set; }
@@ -18,18 +17,17 @@ public class OrderItem : Entity
     public OrderItemStatus Status { get; private set; }
     
     [JsonConstructor]
-    private OrderItem(string name, decimal unitPrice, int quantity)
+    private OrderItem(long orderItemId, string name, decimal unitPrice, int quantity)
     {
-        OrderItemId = Counter;
+        OrderItemId = orderItemId;
         Name = name;
         UnitPrice = unitPrice;
         Quantity = quantity;
         Subtotal = UnitPrice * Quantity;
         Status = OrderItemStatus.InProgress;
-        Counter++;
     }
 
-    public static OrderItem Create(string name, decimal unitPrice, int quantity) => new OrderItem(name, unitPrice, quantity);
+    public static OrderItem Create(long orderItemId, string name, decimal unitPrice, int quantity) => new OrderItem(orderItemId, name, unitPrice, quantity);
 
     public Result MarkAsDelivered()
     {
