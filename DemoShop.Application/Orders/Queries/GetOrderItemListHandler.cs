@@ -6,5 +6,5 @@ namespace DemoShop.Application.Orders.Queries;
 
 public class GetOrderItemListHandler(IDataAccess data) : IRequestHandler<GetOrderItemListQuery, List<OrderItem>>
 {
-    public Task<List<OrderItem>> Handle(GetOrderItemListQuery request, CancellationToken cancellationToken) => Task.FromResult(data.GetOrderItems()); 
+    public Task<List<OrderItem>> Handle(GetOrderItemListQuery request, CancellationToken cancellationToken) => Task.FromResult(data.GetOrderItems(request.OrderId)); 
 }

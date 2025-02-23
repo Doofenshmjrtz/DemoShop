@@ -19,7 +19,7 @@ public class DataAccess : IDataAccess
     
     public Order GetOrder(Guid orderId) => _orders.FirstOrDefault(o => o.Id == orderId)!;
     
-    public List<Order> GetOrders() => _orders;
+    public List<Order> GetOrderList() => _orders;
 
     public OrderItem GetOrderItem(Guid orderItemId)
     {
@@ -35,7 +35,7 @@ public class DataAccess : IDataAccess
         throw new KeyNotFoundException();
     }
 
-    public long AddOrderItem(Guid orderId, string name, decimal price, int quantity)
+    public long CreateOrderItem(Guid orderId, string name, decimal price, int quantity)
     {
         foreach (var order in _orders.Where(order => order.Id == orderId))
         {
@@ -45,10 +45,10 @@ public class DataAccess : IDataAccess
         throw new KeyNotFoundException();
     }
 
-    public long AddOrder()
+    public long CreateOrder()
     {
         var order = Order.Create();
         _orders.Add(order);
-        return order.Items.Last().OrderItemId;
+        return _orders.Last().OrderId;
     }
 }

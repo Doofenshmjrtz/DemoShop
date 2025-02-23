@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DemoShop.Application.Orders.Queries;
 
-public sealed record GetOrderQuery : IRequest<Order>; 
+public sealed record GetOrderListQuery : IRequest<List<Order>>; 
