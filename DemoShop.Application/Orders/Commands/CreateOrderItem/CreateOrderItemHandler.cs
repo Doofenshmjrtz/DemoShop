@@ -3,7 +3,7 @@ using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core.Common.Abstractions;
 using static DemoShop.Domain.Core.Common.Abstractions.Result<long>;
 
-namespace DemoShop.Application.Orders.Commands;
+namespace DemoShop.Application.Orders.Commands.CreateOrderItem;
 
 public class CreateOrderItemHandler : BaseCommandHandler<CreateOrderItemCommand>
 {

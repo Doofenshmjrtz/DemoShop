@@ -4,7 +4,7 @@ using DemoShop.Domain.Core.Common.Abstractions;
 using static DemoShop.Domain.Core.Common.Abstractions.Result<long>;
 
 
-namespace DemoShop.Application.Orders.Commands;
+namespace DemoShop.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderHandler : BaseCommandHandler<CreateOrderCommand>
 {

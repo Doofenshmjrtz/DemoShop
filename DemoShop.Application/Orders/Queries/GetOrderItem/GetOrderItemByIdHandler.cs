@@ -2,7 +2,7 @@ using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core.Order.Entities;
 using MediatR;
 
-namespace DemoShop.Application.Orders.Queries;
+namespace DemoShop.Application.Orders.Queries.GetOrderItem;
 
 public class GetOrderItemByIdHandler : IRequestHandler<GetOrderItemByIdQuery, OrderItem>
 {
@@ -10,6 +10,10 @@ public class GetOrderItemByIdHandler : IRequestHandler<GetOrderItemByIdQuery, Or
 
     public GetOrderItemByIdHandler(IDataAccess data) => _data = data;
     
-    public async Task<OrderItem> Handle(GetOrderItemByIdQuery request, CancellationToken cancellationToken) => 
-        await Task.FromResult(_data.GetOrderItem(request.OrderItemId));
+    public async Task<OrderItem> Handle(GetOrderItemByIdQuery request, CancellationToken cancellationToken)
+    {
+        
+        
+        return await Task.FromResult(_data.GetOrderItem(request.OrderItemId));
+    }
 }

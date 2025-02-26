@@ -1,6 +1,6 @@
 using DemoShop.Application.Common;
 
-namespace DemoShop.Application.Orders.Commands;
+namespace DemoShop.Application.Orders.Commands.CreateOrderItem;
 
 public sealed class CreateOrderItemCommand(Guid id, string name, decimal unitPrice, int quantity) : BaseCommand
 {

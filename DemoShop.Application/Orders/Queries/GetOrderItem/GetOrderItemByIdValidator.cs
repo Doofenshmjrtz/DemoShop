@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace DemoShop.Application.Orders.Queries;
+namespace DemoShop.Application.Orders.Queries.GetOrderItem;
 
 public class GetOrderItemByIdValidator : AbstractValidator<GetOrderItemByIdQuery>
 {

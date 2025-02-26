@@ -2,7 +2,7 @@ using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core.Order;
 using MediatR;
 
-namespace DemoShop.Application.Orders.Queries;
+namespace DemoShop.Application.Orders.Queries.GetOrder;
 
 public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, Order>
 {
