@@ -1,5 +1,6 @@
-using DemoShop.Application.Orders.Commands;
-using DemoShop.Application.Orders.Queries;
+using DemoShop.Application.Orders.Commands.CreateOrder;
+using DemoShop.Application.Orders.Queries.GetOrder;
+using DemoShop.Application.Orders.Queries.GetOrderList;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order;
 using MediatR;

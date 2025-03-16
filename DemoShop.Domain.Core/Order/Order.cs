@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Entities;
 using DemoShop.Domain.Core.Order.Enums;
@@ -15,7 +14,7 @@ public sealed class Order : AggregateRoot
     public DateTime OrderDate { get; private set; }
     public decimal OrderTotal { get; private set; }
     public OrderStatus Status { get; private set; }
-    public ReadOnlyCollection<OrderItem> Items { get; private set; }
+    public IReadOnlyCollection<OrderItem> Items => _items;
 
     private Order()
     {
@@ -23,7 +22,6 @@ public sealed class Order : AggregateRoot
         OrderDate = DateTime.UtcNow;
         OrderTotal = _items.Sum(item => item.Subtotal);
         Status = OrderStatus.Draft;
-        Items = _items.AsReadOnly();
     }
     
     public new static Order Create()
@@ -36,7 +34,7 @@ public sealed class Order : AggregateRoot
     public void AddItem(string name, decimal unitPrice, int quantity)
     {
         EnsureOrderIsModifiable();
-        _items.Add(OrderItem.Create(_orderItemCounter++, name, unitPrice, quantity));
+        _items.Add(OrderItem.Create(Id, _orderItemCounter++, name, unitPrice, quantity));
         OrderTotal = _items.Sum(item => item.Subtotal); 
     }
 
@@ -87,6 +85,8 @@ public sealed class Order : AggregateRoot
 
         Status = OrderStatus.Canceled;
     }
+
+    public OrderItem GetOrderItem() => _items.LastOrDefault() ?? throw new InvalidOperationException($"Item does not exist");
     
     private OrderItem GetOrderItem(Guid orderItemId) => _items.FirstOrDefault(i => i.Id == orderItemId) ?? throw new InvalidOperationException($"Item with id '{orderItemId}' does not exist in the order");
 

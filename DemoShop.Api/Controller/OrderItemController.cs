@@ -1,10 +1,11 @@
-using DemoShop.Application.Orders.Commands;
-using DemoShop.Application.Orders.Queries;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order.Entities;
 using Microsoft.AspNetCore.Mvc;
 using DemoShop.Api.Filters;
 using DemoShop.Api.Models;
+using DemoShop.Application.Orders.Commands.CreateOrderItem;
+using DemoShop.Application.Orders.Queries.GetOrderItem;
+using DemoShop.Application.Orders.Queries.GetOrderItemList;
 using FluentValidation;
 using MediatR;
 

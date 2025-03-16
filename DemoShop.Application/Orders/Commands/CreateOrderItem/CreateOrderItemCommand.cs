@@ -2,11 +2,11 @@ using DemoShop.Application.Common;
 
 namespace DemoShop.Application.Orders.Commands.CreateOrderItem;
 
-public sealed class CreateOrderItemCommand(Guid id, string name, decimal unitPrice, int quantity) : BaseCommand
+public sealed class CreateOrderItemCommand(Guid orderId, string name, decimal unitPrice, int quantity) : BaseCommand
 {
-    public Guid Id { get; init; } = id;
-    public string Name { get; init; } = name;
-    public decimal UnitPrice { get; init; } = unitPrice;
-    public int Quantity { get; init; } = quantity;
+    public Guid OrderId { get; private set; } = orderId;
+    public string Name { get; private set; } = name;
+    public decimal UnitPrice { get; private set; } = unitPrice;
+    public int Quantity { get; private set; } = quantity;
 }
 

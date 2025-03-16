@@ -2,8 +2,11 @@ using DemoShop.Api.Filters;
 using DemoShop.Application;
 using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core;
+using DemoShop.Infrastructure;
+using DemoShop.Infrastructure.Contracts;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +24,13 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ResultFilterAttribute>();
 });
+
+// Configure DbContext
+builder.Services.AddDbContext<DemoShopDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Unit of Work and Repositories
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.Scan(scan => scan
     .FromAssemblyOf<ApplicationEntryPoint>()

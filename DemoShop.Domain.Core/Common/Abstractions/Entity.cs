@@ -18,6 +18,7 @@ public abstract class Entity : IEquatable<Entity>
     public static bool operator !=(Entity? left, Entity? right) => !Equals(left, right);
     
     public List<IDomainEvent> GetDomainEvents() => _domainEvents.ToList();
+    public void ClearDomainEvents() => _domainEvents.Clear();
 
     internal static Entity Create() => throw new NotImplementedException("This method should be implemented in a child class.");
     
