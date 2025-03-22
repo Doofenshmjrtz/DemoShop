@@ -10,7 +10,6 @@ namespace DemoShop.Domain.Core.Order.Entities;
 public class OrderItem : Entity
 {
     public long OrderItemId { get; private set; }
-    public Guid OrderId { get; init; }
     public string Name { get; private set; }
     public decimal UnitPrice { get; init; }
     public int Quantity { get; init;  }
@@ -18,9 +17,8 @@ public class OrderItem : Entity
     public OrderItemStatus Status { get; private set; }
     
     [JsonConstructor]
-    private OrderItem(Guid orderId, long orderItemId, string name, decimal unitPrice, int quantity)
+    private OrderItem(long orderItemId, string name, decimal unitPrice, int quantity)
     {
-        OrderId = orderId;
         OrderItemId = orderItemId;
         Name = name;
         UnitPrice = unitPrice;
@@ -29,9 +27,9 @@ public class OrderItem : Entity
         Status = OrderItemStatus.InProgress;
     }
 
-    public static OrderItem Create(Guid orderId, long orderItemId, string name, decimal unitPrice, int quantity)
+    public static OrderItem Create(long orderItemId, string name, decimal unitPrice, int quantity)
     { 
-        var orderItem = new OrderItem(orderId, orderItemId, name, unitPrice, quantity);
+        var orderItem = new OrderItem(orderItemId, name, unitPrice, quantity);
         orderItem.Raise(new OrderItemCreatedDomainEvent(orderItem.Id));
         return orderItem;
     }
