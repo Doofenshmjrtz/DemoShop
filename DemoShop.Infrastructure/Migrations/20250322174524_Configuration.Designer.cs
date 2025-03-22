@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoShop.Infrastructure.Migrations
 {
     [DbContext(typeof(DemoShopDbContext))]
-    [Migration("20250321143434_Configuration")]
+    [Migration("20250322174524_Configuration")]
     partial class Configuration
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace DemoShop.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("OrderItemId")
@@ -44,6 +44,11 @@ namespace DemoShop.Infrastructure.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -79,6 +84,11 @@ namespace DemoShop.Infrastructure.Migrations
                     b.Property<decimal>("OrderTotal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -92,7 +102,8 @@ namespace DemoShop.Infrastructure.Migrations
                     b.HasOne("DemoShop.Domain.Core.Order.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DemoShop.Domain.Core.Order.Order", b =>

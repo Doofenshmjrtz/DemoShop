@@ -2,7 +2,6 @@ using DemoShop.Application.Common;
 using DemoShop.Application.Orders.Queries.GetOrder;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Domain.Core.Order;
-using DemoShop.Domain.Core.Order.Entities;
 using DemoShop.Infrastructure.Contracts;
 using MediatR;
 
@@ -33,8 +32,7 @@ public class CreateOrderItemHandler : BaseCommandHandler<CreateOrderItemCommand>
             command.Name,
             command.UnitPrice, 
             command.Quantity);
-        
-        // await orderItemRepository.AddAsync(order.GetOrderItem());
+
         orderRepository.Update(order);
         
         await _unitOfWork.SaveChangesAsync(cancellationToken);

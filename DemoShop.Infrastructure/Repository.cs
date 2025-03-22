@@ -1,8 +1,6 @@
-using System.Linq.Expressions;
 using DemoShop.Domain.Core.Common.Abstractions;
 using DemoShop.Infrastructure.Contracts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace DemoShop.Infrastructure;
 
@@ -21,16 +19,24 @@ public class Repository<TAggregateRoot>(DemoShopDbContext context) : IRepository
             .AsNoTracking()
             .Where(e => e.Id == id);
         
-        if (include != null)
-        {
+        if (include != null) 
             query = include(query);
-        }
     
         return await query.FirstOrDefaultAsync(cancellationToken);
     }
     
     public async Task AddAsync(TAggregateRoot entity) => await _dbSet.AddAsync(entity);
 
-    public void Update(TAggregateRoot aggregate) => _dbSet.Update(aggregate);   
+    public void Update(TAggregateRoot aggregate)
+    { 
+        // _dbSet.Attach(aggregate);
+        // _dbSet.Entry(aggregate).State = EntityState.Modified;
+        //
+        // foreach (var entity in GetEntities(aggregate))
+        //     context.Entry(entity).State = EntityState.Modified;
+        
+        _dbSet.Update(aggregate);
+        
+    }   
     public void Delete(TAggregateRoot aggregate) => _dbSet.Remove(aggregate);
 }

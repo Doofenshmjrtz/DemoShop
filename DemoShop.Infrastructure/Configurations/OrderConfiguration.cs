@@ -1,5 +1,4 @@
 using DemoShop.Domain.Core.Order;
-using DemoShop.Domain.Core.Order.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -37,7 +36,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder
             .HasMany(o => o.Items)
             .WithOne()
-            .HasForeignKey("OrderId")
+            .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
         
         builder

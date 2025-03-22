@@ -10,6 +10,7 @@ namespace DemoShop.Domain.Core.Order.Entities;
 public class OrderItem : Entity
 {
     public long OrderItemId { get; private set; }
+    public Guid OrderId { get; init; }
     public string Name { get; private set; }
     public decimal UnitPrice { get; init; }
     public int Quantity { get; init;  }
@@ -26,14 +27,10 @@ public class OrderItem : Entity
         Subtotal = UnitPrice * Quantity;
         Status = OrderItemStatus.InProgress;
     }
-
-    public static OrderItem Create(long orderItemId, string name, decimal unitPrice, int quantity)
-    { 
-        var orderItem = new OrderItem(orderItemId, name, unitPrice, quantity);
-        orderItem.Raise(new OrderItemCreatedDomainEvent(orderItem.Id));
-        return orderItem;
-    }
-
+    
+    public static OrderItem Create(long orderItemId, string name, decimal unitPrice, int quantity) 
+        => new OrderItem(orderItemId, name, unitPrice, quantity);
+    
     public Result MarkAsDelivered()
     {
         if (Status == OrderItemStatus.Delivered)
@@ -42,7 +39,7 @@ public class OrderItem : Entity
         Status = OrderItemStatus.Delivered;
         return Success();
     }
-
+    
     public Result MarkAsCancelled()
     {
         switch (Status)
@@ -57,6 +54,4 @@ public class OrderItem : Entity
                 return Success();
         }
     }
-    
-    
 }

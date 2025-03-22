@@ -12,8 +12,6 @@ public interface IRepository<TAggregateRoot> where TAggregateRoot : AggregateRoo
         Func<IQueryable<TAggregateRoot>, IQueryable<TAggregateRoot>>? include = null,
         CancellationToken cancellationToken = default);
     void Update(TAggregateRoot aggregateRoot);
-    // Task<int> UpdateAsync(
-    //     Expression<Func<SetPropertyCalls<TAggregateRoot>, SetPropertyCalls<TAggregateRoot>>> aggregate);
     void Delete(TAggregateRoot aggregate);
     Task AddAsync(TAggregateRoot aggregate);
 }

@@ -7,6 +7,7 @@ namespace DemoShop.Infrastructure;
 public class DemoShopDbContext(DbContextOptions<DemoShopDbContext> options) : DbContext(options)
 {
     public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

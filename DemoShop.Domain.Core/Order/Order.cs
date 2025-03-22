@@ -32,7 +32,9 @@ public sealed class Order : AggregateRoot
     public void AddItem(string name, decimal unitPrice, int quantity)
     {
         EnsureOrderIsModifiable();
-        _items.Add(OrderItem.Create(_orderItemCounter++, name, unitPrice, quantity));
+        var orderItem = OrderItem.Create(_orderItemCounter++, name, unitPrice, quantity);
+        Raise(new OrderItemCreatedDomainEvent(orderItem.Id));
+        _items.Add(orderItem);
         OrderTotal = _items.Sum(item => item.Subtotal); 
     }
 
