@@ -2,8 +2,10 @@ using DemoShop.Api.Filters;
 using DemoShop.Application;
 using DemoShop.Application.Common.DataAccess;
 using DemoShop.Domain.Core;
+using DemoShop.Domain.Core.Order;
 using DemoShop.Infrastructure;
 using DemoShop.Infrastructure.Contracts;
+using DemoShop.Infrastructure.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +33,8 @@ builder.Services.AddDbContext<DemoShopDbContext>(options =>
 
 // Register Unit of Work and Repositories   
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IRepository<Order>, Repository<Order>>();
+builder.Services.AddScoped<OrderRepository>();
 
 builder.Services.Scan(scan => scan
     .FromAssemblyOf<ApplicationEntryPoint>()

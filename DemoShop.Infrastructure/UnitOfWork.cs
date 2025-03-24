@@ -53,5 +53,10 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
+    public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Dispose() => _context.Dispose();
 }

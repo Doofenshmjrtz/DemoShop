@@ -8,9 +8,9 @@ public class Repository<TAggregateRoot>(DemoShopDbContext context) : IRepository
     where TAggregateRoot : AggregateRoot
 {
     private readonly DbSet<TAggregateRoot> _dbSet = context.Set<TAggregateRoot>();
-
-    public async Task<IEnumerable<TAggregateRoot>> GetAllAsync() => await _dbSet.ToListAsync();
-    public async Task<TAggregateRoot?> GetAsync(
+    public async Task<IEnumerable<TAggregateRoot>> GetAllAsync() 
+        => await _dbSet.ToListAsync();
+    public async Task<TAggregateRoot?> GetByIdAsync(
         Guid id,
         Func<IQueryable<TAggregateRoot>, IQueryable<TAggregateRoot>>? include = null,
         CancellationToken cancellationToken = default)
@@ -25,7 +25,8 @@ public class Repository<TAggregateRoot>(DemoShopDbContext context) : IRepository
         return await query.FirstOrDefaultAsync(cancellationToken);
     }
     
-    public async Task AddAsync(TAggregateRoot entity) => await _dbSet.AddAsync(entity);
+    public async Task AddAsync(TAggregateRoot aggregate) 
+        => await _dbSet.AddAsync(aggregate);
 
     public void Update(TAggregateRoot aggregate)
     { 
