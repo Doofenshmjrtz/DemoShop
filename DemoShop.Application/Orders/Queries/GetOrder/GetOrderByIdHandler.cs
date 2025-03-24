@@ -19,9 +19,8 @@ public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, Order>
 
     public async Task<Order> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
-        var order = await _orderRepository.GetByIdAsync(
+        var order = await _orderRepository.GetOrderByIdTestAsync(
             request.OrderId,
-            query => query.Include(o => o.Items),
             cancellationToken: cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

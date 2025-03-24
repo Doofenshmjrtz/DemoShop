@@ -22,7 +22,8 @@ public class OrderRepository : Repository<Order>, IOrderRepository
     {
         return await _dbContext
             .Orders
-            .Include(o => o.Id == orderId)
+            .Include(o => o.Items
+                .Where(i => i.OrderId == orderId))
             .AsNoTracking()
             .SingleOrDefaultAsync(cancellationToken);
     }
