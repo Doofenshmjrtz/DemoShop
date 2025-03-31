@@ -33,8 +33,9 @@ public class OrderRepository : Repository<Order>, IOrderRepository
         throw new NotImplementedException();
     }
 
-    public Task AddOrderItemAsync(OrderItem orderItem)
+    public void UpdateOrderItem(Order order)
     {
-        throw new NotImplementedException();
+        _dbContext.Entry(order).State = EntityState.Modified;
+        _dbContext.OrderItems.Add(order.Items.LastOrDefault()!);
     }
 }

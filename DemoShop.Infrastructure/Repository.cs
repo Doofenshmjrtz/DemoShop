@@ -1,4 +1,5 @@
 using DemoShop.Domain.Core.Common.Abstractions;
+using DemoShop.Domain.Core.Common.Interfaces;
 using DemoShop.Infrastructure.Contracts;
 using Microsoft.EntityFrameworkCore;
 
